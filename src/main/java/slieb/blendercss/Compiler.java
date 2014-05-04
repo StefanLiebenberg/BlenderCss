@@ -50,6 +50,12 @@ public class Compiler {
 
 
     private void compileFiles(List<File> inputFiles, File outputFile, CompileOptions options) throws IOException {
+        for (File inputFile : inputFiles) {
+            String name = inputFile.getName();
+            if (!(name.endsWith(".css") || name.endsWith(".gss"))) {
+                System.err.println(String.format("Warning: File '%s' does not have css or gss extension, assuming the file compatible with gss compiler.", inputFile.getPath()));
+            }
+        }
         gssCompilerApi.compile(inputFiles, outputFile, options);
     }
 

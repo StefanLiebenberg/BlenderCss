@@ -1,11 +1,15 @@
 package slieb.blendercss;
 
 
+import com.github.sommeri.less4j.LessCompiler;
+import com.github.sommeri.less4j.core.DefaultLessCompiler;
 import com.google.inject.Injector;
 import slieb.blendercss.configuration.DirectoryModule;
+import slieb.blendercss.configuration.InterfaceModule;
 import slieb.blendercss.configuration.JRubyRuntimeModule;
 import slieb.blendercss.configuration.PreCompilerModule;
 import slieb.blendercss.precompilers.CompassPrecompiler;
+import slieb.blendercss.precompilers.LessPrecompiler;
 
 import java.io.File;
 
@@ -16,6 +20,8 @@ public class Loader {
         return createInjector(
                 new DirectoryModule("workingDirectory", workingDirectory),
                 new JRubyRuntimeModule(),
+                new InterfaceModule<>(LessCompiler.class, DefaultLessCompiler.class),
+                new PreCompilerModule(LessPrecompiler.class),
                 new PreCompilerModule(CompassPrecompiler.class));
     }
 }

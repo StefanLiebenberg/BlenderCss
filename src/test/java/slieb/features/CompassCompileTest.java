@@ -75,4 +75,23 @@ public class CompassCompileTest extends AbstractFeatureTest {
         assertTrue(outputFile.exists());
         assertTrue(renameMap.exists());
     }
+
+    @Test
+    public void testCompileCompassLESSFile() throws Throwable {
+        List<File> inputFiles = new ImmutableList.Builder<File>()
+                .add(getResourceFile("stylesheets/features/compass_compile/simple.less"))
+                .build();
+
+        File outputFile = getOutputFile("style.css");
+        File renameMap = getOutputFile("rename.js");
+
+        CompileOptions options = new CompileOptions.Builder()
+                .setOutputCssRenameMap(renameMap)
+                .build();
+
+        compiler.compile(inputFiles, outputFile, options);
+
+        assertTrue(outputFile.exists());
+        assertTrue(renameMap.exists());
+    }
 }

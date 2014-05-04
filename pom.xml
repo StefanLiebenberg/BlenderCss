@@ -155,7 +155,11 @@
             <artifactId>compass-gems</artifactId>
             <version>0.12.2</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.sommeri</groupId>
+            <artifactId>less4j</artifactId>
+            <version>1.5.3</version>
+        </dependency>
         <dependency>
             <groupId>com.googlecode.lambdaj</groupId>
             <artifactId>lambdaj</artifactId>
