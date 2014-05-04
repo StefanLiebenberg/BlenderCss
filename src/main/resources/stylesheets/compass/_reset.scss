@@ -1,0 +1,13 @@
+@import "compass/reset/utilities";
+
+
+// Reset a quotation (`q`, `blockquote`)
+@mixin reset-quotation {
+  quotes: none;
+  &:before, &:after {
+    /* @alternate */ content: "";
+    content: none;
+  }
+}
+
+@include global-reset;

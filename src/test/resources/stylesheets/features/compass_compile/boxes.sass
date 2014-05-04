@@ -1,0 +1,11 @@
+@import "compass/css3"
+@import "blendercss/overrides"
+
+body div.box
+  border: 1px solid black
+  background: grey
+  +display-box()
+  &.horizontal
+    +box-orient(horizontal)
+  &.vertical
+    +box-orient(vertical)

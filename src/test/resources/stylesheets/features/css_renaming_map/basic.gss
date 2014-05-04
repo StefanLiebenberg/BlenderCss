@@ -1,0 +1,10 @@
+@provide basic-gss;
+
+@defmixin fooMix() {
+  background-color: red;
+}
+
+.foo {
+  @mixin fooMix();
+}
+
