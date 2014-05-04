@@ -2,41 +2,31 @@ package slieb.features;
 
 
 import com.google.common.collect.ImmutableList;
-import com.google.inject.Injector;
 import org.junit.Before;
 import org.junit.Test;
 import slieb.blendercss.CompileOptions;
-import slieb.blendercss.Compiler;
-import slieb.blendercss.Loader;
 
 import java.io.File;
 import java.util.List;
 
 public class MixedCompileTest extends AbstractFeatureTest {
 
-    private File workingDirectory;
-
-    private Injector injector;
-
-    private slieb.blendercss.Compiler compiler;
+    private File outputFile, renameMap;
 
     @Before
-    public void setup() {
-        workingDirectory = getOutputDirectory();
-        injector = Loader.getInjector(workingDirectory);
-        compiler = injector.getInstance(Compiler.class);
+    public void setupFiles() {
+        outputFile = getOutputFile("style.css");
+        renameMap = getOutputFile("rename.js");
     }
 
     @Test
     public void testMixedCompile() throws Throwable {
 
         List<File> inputFiles = new ImmutableList.Builder<File>()
-                .add(getResourceFile("stylesheets/basic.css"))
-                .add(getResourceFile("stylesheets/basic.sass"))
+                .add(getResourceFile("stylesheets/features/compass_compile/reset.scss"))
+                .add(getResourceFile("stylesheets/features/compass_compile/boxes.sass"))
+                .add(getResourceFile("stylesheets/features/compass_compile/simple.less"))
                 .build();
-
-        File outputFile = getOutputFile("style.css");
-        File renameMap = getOutputFile("rename.js");
 
         CompileOptions options = new CompileOptions.Builder()
                 .setOutputCssRenameMap(renameMap)

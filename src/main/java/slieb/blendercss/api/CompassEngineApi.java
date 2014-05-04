@@ -66,6 +66,7 @@ public class CompassEngineApi {
 
     public void compile(File inputFile, File outputFile) throws IOException {
         String outputString = compile(inputFile);
+        outputFile.getParentFile().mkdirs();
         Files.write(outputString.getBytes(), outputFile);
     }
 }

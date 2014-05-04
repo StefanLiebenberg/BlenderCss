@@ -42,8 +42,10 @@ public class Compiler {
 
     private List<File> precompile(List<File> inputFiles) throws IOException {
         List<File> result = new ArrayList<>();
-        for (File inputFile : inputFiles) {
-            result.add(precompileFile(inputFile));
+        if (inputFiles != null && !inputFiles.isEmpty()) {
+            for (File inputFile : inputFiles) {
+                result.add(precompileFile(inputFile));
+            }
         }
         return result;
     }

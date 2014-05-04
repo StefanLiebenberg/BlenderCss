@@ -32,6 +32,7 @@ public class CompassPrecompiler implements CssPrecompiler {
         compassApi.setImporter(inputFile.getParentFile());
         compassApi.setOption("filename", inputFile.getPath());
         compassApi.setOption("css_filename", outputFile.getPath());
+        compassApi.setOption("cache_location", fileGenerator.getCacheDirectory().getPath());
         compassApi.compile(inputFile, outputFile);
         return outputFile;
     }

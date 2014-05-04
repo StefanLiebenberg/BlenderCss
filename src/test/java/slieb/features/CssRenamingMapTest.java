@@ -2,14 +2,9 @@ package slieb.features;
 
 
 import com.google.common.collect.ImmutableList;
-import com.google.inject.Injector;
-import org.apache.tools.ant.util.FileUtils;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import slieb.blendercss.CompileOptions;
-import slieb.blendercss.Compiler;
-import slieb.blendercss.Loader;
 import slieb.blendercss.utilities.CssRenameMapParser;
 import slieb.blendercss.utilities.RenamingMap;
 
@@ -20,32 +15,18 @@ import static org.junit.Assert.assertTrue;
 
 public class CssRenamingMapTest extends AbstractFeatureTest {
 
-    private File workingDirectory;
-
-    private Injector injector;
-
     private CssRenameMapParser renameMapParser;
 
-    private Compiler compiler;
-
     @Before
-    public void setup() {
-        workingDirectory = getOutputDirectory();
-        injector = Loader.getInjector(workingDirectory);
+    public void setupParser() {
         renameMapParser = injector.getInstance(CssRenameMapParser.class);
-        compiler = injector.getInstance(Compiler.class);
-    }
-
-    @After
-    public void tearDown() {
-        FileUtils.delete(workingDirectory);
     }
 
     @Test
     public void testRenamingMapForBasicCss() throws Exception {
 
         List<File> inputFiles = new ImmutableList.Builder<File>()
-                .add(getResourceFile("stylesheets/basic.css"))
+                .add(getResourceFile("stylesheets/features/css_renaming_map/basic.css"))
                 .build();
 
         File outputFile = getOutputFile("style.css");
@@ -66,7 +47,7 @@ public class CssRenamingMapTest extends AbstractFeatureTest {
     public void testRenamingMapForSassFiles() throws Exception {
 
         List<File> inputFiles = new ImmutableList.Builder<File>()
-                .add(getResourceFile("stylesheets/basic.sass"))
+                .add(getResourceFile("stylesheets/features/css_renaming_map/basic.sass"))
                 .build();
 
         File outputFile = getOutputFile("style.css");

@@ -26,6 +26,14 @@ public class FileGenerator {
         }
     }
 
+    public File getTempDirectory() {
+        return new File(workingDirectory, "precompiledFiles");
+    }
+
+    public File getCacheDirectory() {
+        return new File(workingDirectory, "cache");
+    }
+
     private String getMD5(String message) throws IOException {
         String digest = null;
         try {
@@ -44,6 +52,6 @@ public class FileGenerator {
     public File getOutputFileFor(File inputFile, String outputExtention) throws IOException {
         String fullPath = inputFile.getAbsolutePath();
         String md5String = getMD5(fullPath);
-        return new File(workingDirectory, md5String + "." + outputExtention);
+        return new File(getTempDirectory(), md5String + "." + outputExtention);
     }
 }

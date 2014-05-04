@@ -32,6 +32,7 @@ public class LessPrecompiler implements CssPrecompiler {
         try {
             File outputFile = fileGenerator.getOutputFileFor(inputFile, "css");
             String cssString = lessCompiler.compile(inputFile).getCss();
+            outputFile.getParentFile().mkdirs();
             Files.write(cssString.getBytes(), outputFile);
             return outputFile;
         } catch (Less4jException e) {

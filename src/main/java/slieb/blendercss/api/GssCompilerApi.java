@@ -63,6 +63,7 @@ public class GssCompilerApi {
         checkArgument(inputFiles != null && !inputFiles.isEmpty());
         checkArgument(outputFile != null);
         checkArgument(options != null);
+        outputFile.getParentFile().mkdirs();
         ClosureCommandLineCompiler.main(getArguments(inputFiles, outputFile, options));
     }
 }
