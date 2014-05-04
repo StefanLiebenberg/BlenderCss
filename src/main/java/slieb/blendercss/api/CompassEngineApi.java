@@ -64,7 +64,7 @@ public class CompassEngineApi {
         callMethodRaw("unshiftLoadpath", getRubyString(loadpath));
     }
 
-    public void compile(File inputFile, File outputFile, Object options) throws IOException {
+    public void compile(File inputFile, File outputFile) throws IOException {
         String outputString = compile(inputFile);
         Files.write(outputString.getBytes(), outputFile);
     }

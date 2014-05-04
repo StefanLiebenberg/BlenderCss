@@ -13,12 +13,17 @@ import java.io.File;
 import java.util.List;
 
 public class MixedCompileTest extends AbstractFeatureTest {
-    private Injector injector = Loader.getInjector();
+
+    private File workingDirectory;
+
+    private Injector injector;
 
     private slieb.blendercss.Compiler compiler;
 
     @Before
     public void setup() {
+        workingDirectory = getOutputDirectory();
+        injector = Loader.getInjector(workingDirectory);
         compiler = injector.getInstance(Compiler.class);
     }
 

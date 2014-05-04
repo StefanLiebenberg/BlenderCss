@@ -26,7 +26,6 @@ class SassCompilerApi
 
   def compile(inputFile, additionalOptions = {})
     opts = @options.merge(additionalOptions);
-    puts opts.inspect
     Sass::Engine.for_file(inputFile, opts).render
   end
 

@@ -136,6 +136,11 @@
             <version>3.0</version>
         </dependency>
         <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-multibindings</artifactId>
+            <version>3.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.google.closure-stylesheets</groupId>
             <artifactId>closure-stylesheets</artifactId>
             <version>20140426</version>

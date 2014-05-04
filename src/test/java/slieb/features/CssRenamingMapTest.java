@@ -3,6 +3,8 @@ package slieb.features;
 
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Injector;
+import org.apache.tools.ant.util.FileUtils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import slieb.blendercss.CompileOptions;
@@ -18,7 +20,9 @@ import static org.junit.Assert.assertTrue;
 
 public class CssRenamingMapTest extends AbstractFeatureTest {
 
-    private Injector injector = Loader.getInjector();
+    private File workingDirectory;
+
+    private Injector injector;
 
     private CssRenameMapParser renameMapParser;
 
@@ -26,8 +30,15 @@ public class CssRenamingMapTest extends AbstractFeatureTest {
 
     @Before
     public void setup() {
+        workingDirectory = getOutputDirectory();
+        injector = Loader.getInjector(workingDirectory);
         renameMapParser = injector.getInstance(CssRenameMapParser.class);
         compiler = injector.getInstance(Compiler.class);
+    }
+
+    @After
+    public void tearDown() {
+        FileUtils.delete(workingDirectory);
     }
 
     @Test

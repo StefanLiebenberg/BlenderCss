@@ -14,23 +14,26 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import static java.nio.file.Files.deleteIfExists;
 import static org.junit.Assert.assertTrue;
 
 public class CompassCompileTest extends AbstractFeatureTest {
 
-    private Injector injector = Loader.getInjector();
+    private File workingDirectory;
+
+    private Injector injector;
 
     private slieb.blendercss.Compiler compiler;
 
     @Before
     public void setup() {
+        workingDirectory = getOutputDirectory();
+        injector = Loader.getInjector(workingDirectory);
         compiler = injector.getInstance(slieb.blendercss.Compiler.class);
     }
 
     @After
     public void tearDown() throws IOException {
-        FileUtils.delete(getOutputDirectory());
+        FileUtils.delete(workingDirectory);
     }
 
     @Test
