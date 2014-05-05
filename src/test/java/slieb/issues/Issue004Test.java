@@ -1,13 +1,10 @@
 package slieb.issues;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.io.Files;
-import cz.vutbr.web.css.CSSFactory;
-import cz.vutbr.web.css.NodeData;
-import cz.vutbr.web.css.StyleSheet;
+import cz.vutbr.web.css.*;
+import cz.vutbr.web.csskit.TermURIImpl;
+import cz.vutbr.web.domassign.Analyzer;
 import cz.vutbr.web.domassign.DirectAnalyzer;
-import org.apache.stanbol.enhancer.engines.htmlextractor.impl.DOMBuilder;
-import org.jsoup.Jsoup;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -15,10 +12,12 @@ import org.w3c.dom.Element;
 import slieb.blendercss.CompileOptions;
 import slieb.features.AbstractFeatureTest;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.nio.charset.Charset;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class Issue004Test extends AbstractFeatureTest {
 
@@ -28,11 +27,16 @@ public class Issue004Test extends AbstractFeatureTest {
 
     private File outputFile;
 
+    private Document document;
+
     @Before
-    public void setupFile() {
+    public void setupFile() throws Throwable {
         outputFile = getOutputFile("style.css");
         optionsBuilder = new CompileOptions.Builder();
         filesBuilder = new ImmutableList.Builder<>();
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        document = documentBuilder.newDocument();
     }
 
     @Test
@@ -44,27 +48,20 @@ public class Issue004Test extends AbstractFeatureTest {
         optionsBuilder.setOutputPath("/server/css/style.css");
 
         compiler.compile(filesBuilder.build(), outputFile, optionsBuilder.build());
-        String content = Files.toString(outputFile, Charset.defaultCharset());
-
-        StyleSheet styleSheet = CSSFactory.parse(content);
+        StyleSheet styleSheet = CSSFactory.parse(outputFile.getPath(), Charset.defaultCharset().name());
         DirectAnalyzer directAnalyzer = new DirectAnalyzer(styleSheet);
+        assertElementBackgroundImageUrlEquals("/serve/assets/images/bad.jpg", "issue004-image-url-case-01", directAnalyzer);
+        assertElementBackgroundImageUrlEquals("/bad.jpg", "issue004-image-url-case-02", directAnalyzer);
+        assertElementBackgroundImageUrlEquals("http://domain.com/bad.jpg", "issue004-image-url-case-04", directAnalyzer);
+    }
 
-
-        Document doc = DOMBuilder.jsoup2DOM(Jsoup.parse("<!DOCTYPE html><html><body><div ID='elone' class='issue004-image-url-case-01'></div><div id='target-02' class='issue004-image-url-case-02'></div><div id='target-03' class='issue004-image-url-case-03'></div><div id='target-04' class='issue004-image-url-case-04'></div></body></html>"));
-        doc.normalizeDocument();
-        doc.importNode(doc.getDocumentElement(), true);
-
-        Element element = doc.getElementById("elone");
-        NodeData data = directAnalyzer.getElementStyle(element, null, null);
-
-
-
-
-        assertTrue(content.contains(".issue004-image-url-case-01{background-image:url('/serve/assets/images/bad.jpg')}"));
-        assertTrue(content.contains(".issue004-image-url-case-02{background-image:url('/bad.jpg')}"));
-//        Disable this assert, as compass does not normalize things.
-//        assertTrue(content.contains(".issue004-image-url-case-03{background-image:url(/serve/bad.jpg)}"));
-        assertTrue(content.contains(".issue004-image-url-case-04{background-image:url('http://domain.com/bad.jpg')}"));
+    public void assertElementBackgroundImageUrlEquals(String expected, String cssClass, DirectAnalyzer analyzer) throws Throwable {
+        Element case1Element = document.createElement("div");
+        case1Element.setAttribute("class", cssClass);
+        NodeData data = analyzer.getElementStyle(case1Element, null, null);
+        CSSProperty.BackgroundImage backgroundImage = data.getProperty("background-image");
+        Term<String> object = data.getValue(TermURIImpl.class, "background-image");
+        assertEquals(expected, object.getValue());
     }
 
     //    @Test
