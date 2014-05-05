@@ -9,7 +9,6 @@ import slieb.blendercss.configuration.InterfaceModule;
 import slieb.blendercss.configuration.JRubyRuntimeModule;
 import slieb.blendercss.configuration.PreCompilerModule;
 import slieb.blendercss.precompilers.functions.ImageUrlPrecompiler;
-import slieb.blendercss.precompilers.functions.UrlFunctionCleaner;
 import slieb.blendercss.precompilers.languages.CompassPrecompiler;
 import slieb.blendercss.precompilers.languages.LessPrecompiler;
 
@@ -25,7 +24,6 @@ public class Loader {
                 new InterfaceModule<>(LessCompiler.class, DefaultLessCompiler.class),
                 new PreCompilerModule(ImageUrlPrecompiler.class),
                 new PreCompilerModule(LessPrecompiler.class),
-                new PreCompilerModule(CompassPrecompiler.class),
-                new PreCompilerModule(UrlFunctionCleaner.class));
+                new PreCompilerModule(CompassPrecompiler.class));
     }
 }
