@@ -4,7 +4,7 @@
     <groupId>com.github.stefanliebenberg</groupId>
     <packaging>jar</packaging>
     <artifactId>blender-css</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
     <name>BlenderCss</name>
     <description>BlenderCss provides a java toolset that compiles css from
         different supersets of css together.
@@ -206,7 +206,7 @@
             scm:git:git@github.com:StefanLiebenberg/BlenderCss.git
         </developerConnection>
         <url>http://github.com/StefanLiebenberg/BlenderCss</url>
-        <tag>blender-css-1.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
