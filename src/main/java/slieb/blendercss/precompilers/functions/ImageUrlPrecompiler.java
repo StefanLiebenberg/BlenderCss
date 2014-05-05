@@ -24,7 +24,7 @@ public class ImageUrlPrecompiler extends AbstractFunctionPrecompiler {
 
     @Inject
     public ImageUrlPrecompiler(@Nonnull FileGenerator fileGenerator) {
-        super(PATTERN, fileGenerator, null, null);
+        super(PATTERN, fileGenerator, INPUT_EXTENSIONS, null);
     }
 
     @Override

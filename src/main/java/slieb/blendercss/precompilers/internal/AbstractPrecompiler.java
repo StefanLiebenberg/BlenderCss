@@ -1,6 +1,5 @@
 package slieb.blendercss.precompilers.internal;
 
-import com.google.common.base.Preconditions;
 import slieb.blendercss.CompileOptions;
 import slieb.blendercss.internal.FileGenerator;
 
@@ -9,6 +8,7 @@ import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 
+import static com.google.common.base.Preconditions.checkState;
 
 public abstract class AbstractPrecompiler implements CssPrecompiler {
 
@@ -16,6 +16,14 @@ public abstract class AbstractPrecompiler implements CssPrecompiler {
     protected final String[] inputExtensions;
     protected final String outputExtension;
 
+    /**
+     * @param fileGenerator
+     * @param inputExtensions IF null, then all inputs are allowed. ( important
+     *                        to use other checks then to ensure that no
+     *                        circular compiling happens )
+     * @param outputExtension IF null, then original file's input
+     *                        extension will be used.
+     */
     protected AbstractPrecompiler(@Nonnull FileGenerator fileGenerator, @Nullable String[] inputExtensions, @Nullable String outputExtension) {
         this.fileGenerator = fileGenerator;
         this.inputExtensions = inputExtensions;
@@ -39,10 +47,10 @@ public abstract class AbstractPrecompiler implements CssPrecompiler {
 
     @Override
     public File compile(File inputFile, CompileOptions options) throws IOException {
-        File outputFile = fileGenerator.getOutputFileFor(inputFile, outputExtension);
+        final File outputFile = fileGenerator.getOutputFileFor(inputFile, outputExtension);
         outputFile.getParentFile().mkdirs();
         compile(inputFile, outputFile, options);
-        Preconditions.checkState(outputFile.exists(), "Should have created output file.");
+        checkState(outputFile.exists(), "Should have created output file.");
         return outputFile;
     }
 

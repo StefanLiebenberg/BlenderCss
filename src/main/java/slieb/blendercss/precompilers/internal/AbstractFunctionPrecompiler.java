@@ -14,6 +14,16 @@ public abstract class AbstractFunctionPrecompiler extends AbstractPrecompiler {
 
     private final Pattern pattern;
 
+    /**
+     *
+     * @param pattern
+     * @param fileGenerator
+     * @param inputExtensions IF null, then all inputs are allowed. ( important
+     *                        to use other checks then to ensure that no
+     *                        circular compiling happens )
+     * @param outputExtension IF null, then original file's input
+     *                        extension will be used.
+     */
     protected AbstractFunctionPrecompiler(@Nonnull Pattern pattern,
                                           @Nonnull FileGenerator fileGenerator,
                                           @Nullable String[] inputExtensions,
