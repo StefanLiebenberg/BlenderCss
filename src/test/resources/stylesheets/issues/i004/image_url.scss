@@ -1,0 +1,16 @@
+
+.issue004-image-url-case-01 {
+  background-image: image-url('bad.jpg');
+}
+
+.issue004-image-url-case-02 {
+  background-image: image-url('/bad.jpg');
+}
+
+.issue004-image-url-case-03 {
+  background-image: image-url('../../bad.jpg');
+}
+
+.issue004-image-url-case-04 {
+  background-image: image-url('http://domain.com/bad.jpg');
+}

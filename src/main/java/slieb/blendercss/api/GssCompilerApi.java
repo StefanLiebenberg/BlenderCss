@@ -2,6 +2,8 @@ package slieb.blendercss.api;
 
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.css.JobDescription;
+import com.google.common.css.Vendor;
 import com.google.common.css.compiler.commandline.ClosureCommandLineCompiler;
 import com.google.inject.Singleton;
 import slieb.blendercss.CompileOptions;
@@ -29,29 +31,43 @@ public class GssCompilerApi {
             // TODO create directory for rename map.
             arguments.add("--output-renaming-map");
             arguments.add(cssRenamingMap.getAbsolutePath());
+
+            if (options.getShouldCompile()) {
+                arguments.add("--output-renaming-map-format");
+                arguments.add("CLOSURE_COMPILED");
+                if (options.getShouldDebug()) {
+                    arguments.add("--rename");
+                    arguments.add("DEBUG");
+                } else {
+                    arguments.add("--rename");
+                    arguments.add("CLOSURE");
+                }
+            } else {
+                arguments.add("--output-renaming-map-format");
+                arguments.add("CLOSURE_UNCOMPILED");
+                arguments.add("--rename");
+                arguments.add("NONE");
+            }
         }
 
-
-        Boolean debug = options.getShouldDebug();
-        if (options.getShouldCompile()) {
-            arguments.add("--output-renaming-map-format");
-            arguments.add("CLOSURE_COMPILED");
-            if (options.getShouldDebug()) {
-                arguments.add("--rename");
-                arguments.add("DEBUG");
-            } else {
-                arguments.add("--rename");
-                arguments.add("CLOSURE");
-            }
-        } else {
-            arguments.add("--output-renaming-map-format");
-            arguments.add("CLOSURE_UNCOMPILED");
-            arguments.add("--rename");
-            arguments.add("NONE");
+        if (options.getShouldDebug() || !options.getShouldCompile()) {
+            arguments.add("--pretty-print");
         }
 
         arguments.add("--output-file");
         arguments.add(outputFile.getAbsolutePath());
+
+        JobDescription.InputOrientation orientation = options.getOrientation();
+        if (orientation != null) {
+            arguments.add("--input-orientation");
+            arguments.add(orientation.name());
+        }
+
+        Vendor vendor = options.getVendor();
+        if (vendor != null) {
+            arguments.add("--vendor");
+            arguments.add(vendor.name());
+        }
 
         arguments.addAll(collect(inputFiles, on(File.class).getAbsolutePath()));
 

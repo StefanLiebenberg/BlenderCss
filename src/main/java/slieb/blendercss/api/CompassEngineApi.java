@@ -64,6 +64,14 @@ public class CompassEngineApi {
         callMethodRaw("unshiftLoadpath", getRubyString(loadpath));
     }
 
+    public void setHttpImagesPath(String path) {
+        callMethodRaw("setHttpImagesPath", getRubyString(path));
+    }
+
+    public void setRelativeAssets(Boolean value) {
+        callMethodRaw("setRelativeAssets", convertJavaToRuby(runtime, value));
+    }
+
     public void compile(File inputFile, File outputFile) throws IOException {
         String outputString = compile(inputFile);
         outputFile.getParentFile().mkdirs();

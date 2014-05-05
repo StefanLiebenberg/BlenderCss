@@ -3,6 +3,7 @@ package slieb.blendercss;
 
 import com.google.inject.Inject;
 import slieb.blendercss.api.GssCompilerApi;
+import slieb.blendercss.precompilers.internal.CssPrecompiler;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,29 +23,29 @@ public class Compiler {
         this.gssCompilerApi = gssCompilerApi;
     }
 
-    private File precompileFilePass(File inputFile) throws IOException {
+    private File precompileFilePass(File inputFile, CompileOptions options) throws IOException {
         for (CssPrecompiler precompiler : preCompilers) {
             if (precompiler.canCompile(inputFile)) {
-                return precompiler.compile(inputFile);
+                return precompiler.compile(inputFile, options);
             }
         }
         return null;
     }
 
-    private File precompileFile(File inputFile) throws IOException {
-        File outputFile = precompileFilePass(inputFile);
+    private File precompileFile(File inputFile, CompileOptions options) throws IOException {
+        File outputFile = precompileFilePass(inputFile, options);
         if (outputFile != null) {
-            return precompileFile(outputFile);
+            return precompileFile(outputFile, options);
         } else {
             return inputFile;
         }
     }
 
-    private List<File> precompile(List<File> inputFiles) throws IOException {
+    private List<File> precompile(List<File> inputFiles, CompileOptions options) throws IOException {
         List<File> result = new ArrayList<>();
         if (inputFiles != null && !inputFiles.isEmpty()) {
             for (File inputFile : inputFiles) {
-                result.add(precompileFile(inputFile));
+                result.add(precompileFile(inputFile, options));
             }
         }
         return result;
@@ -62,7 +63,7 @@ public class Compiler {
     }
 
     public void compile(List<File> inputFiles, File outputFile, CompileOptions options) throws IOException {
-        compileFiles(precompile(inputFiles), outputFile, options);
+        compileFiles(precompile(inputFiles, options), outputFile, options);
     }
 }
 

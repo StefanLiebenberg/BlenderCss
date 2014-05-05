@@ -8,8 +8,10 @@ import slieb.blendercss.configuration.DirectoryModule;
 import slieb.blendercss.configuration.InterfaceModule;
 import slieb.blendercss.configuration.JRubyRuntimeModule;
 import slieb.blendercss.configuration.PreCompilerModule;
-import slieb.blendercss.precompilers.CompassPrecompiler;
-import slieb.blendercss.precompilers.LessPrecompiler;
+import slieb.blendercss.precompilers.functions.ImageUrlPrecompiler;
+import slieb.blendercss.precompilers.functions.UrlFunctionCleaner;
+import slieb.blendercss.precompilers.languages.CompassPrecompiler;
+import slieb.blendercss.precompilers.languages.LessPrecompiler;
 
 import java.io.File;
 
@@ -21,7 +23,9 @@ public class Loader {
                 new DirectoryModule("workingDirectory", workingDirectory),
                 new JRubyRuntimeModule(),
                 new InterfaceModule<>(LessCompiler.class, DefaultLessCompiler.class),
+                new PreCompilerModule(ImageUrlPrecompiler.class),
                 new PreCompilerModule(LessPrecompiler.class),
-                new PreCompilerModule(CompassPrecompiler.class));
+                new PreCompilerModule(CompassPrecompiler.class),
+                new PreCompilerModule(UrlFunctionCleaner.class));
     }
 }

@@ -24,6 +24,14 @@ class SassCompilerApi
     @options[:load_paths].unshift(Sass::Importers::Filesystem.new(load_path))
   end
 
+  def setHttpImagesPath path
+    Compass.configuration.http_images_path = path;
+  end
+
+  def setRelativeAssets value
+    Compass.configuration.relative_assets = value
+  end
+
   def compile(inputFile, additionalOptions = {})
     opts = @options.merge(additionalOptions);
     Sass::Engine.for_file(inputFile, opts).render

@@ -182,6 +182,22 @@
             <version>1.9.5</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>net.sf.cssbox</groupId>
+            <artifactId>jstyleparser</artifactId>
+            <version>1.16</version>
+            <!--<scope>test</scope>-->
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.7.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.stanbol</groupId>
+            <artifactId>org.apache.stanbol.enhancer.engines.htmlextractor</artifactId>
+            <version>0.12.0</version>
+        </dependency>
     </dependencies>
 
     <scm>

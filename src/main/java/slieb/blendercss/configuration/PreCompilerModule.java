@@ -2,7 +2,7 @@ package slieb.blendercss.configuration;
 
 
 import com.google.inject.AbstractModule;
-import slieb.blendercss.CssPrecompiler;
+import slieb.blendercss.precompilers.internal.CssPrecompiler;
 
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
 
