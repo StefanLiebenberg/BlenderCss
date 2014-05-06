@@ -3,13 +3,12 @@ package slieb.issues;
 import com.google.common.collect.ImmutableList;
 import cz.vutbr.web.css.*;
 import cz.vutbr.web.csskit.TermURIImpl;
-import cz.vutbr.web.domassign.Analyzer;
 import cz.vutbr.web.domassign.DirectAnalyzer;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import slieb.blendercss.CompileOptions;
+import slieb.blendercss.BlendOptions;
 import slieb.features.AbstractFeatureTest;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -21,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 public class Issue004Test extends AbstractFeatureTest {
 
-    private CompileOptions.Builder optionsBuilder;
+    private BlendOptions.Builder optionsBuilder;
 
     private ImmutableList.Builder<File> filesBuilder;
 
@@ -32,7 +31,7 @@ public class Issue004Test extends AbstractFeatureTest {
     @Before
     public void setupFile() throws Throwable {
         outputFile = getOutputFile("style.css");
-        optionsBuilder = new CompileOptions.Builder();
+        optionsBuilder = new BlendOptions.Builder();
         filesBuilder = new ImmutableList.Builder<>();
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -47,7 +46,7 @@ public class Issue004Test extends AbstractFeatureTest {
         optionsBuilder.setImagesPath("/serve/assets/images/");
         optionsBuilder.setOutputPath("/server/css/style.css");
 
-        compiler.compile(filesBuilder.build(), outputFile, optionsBuilder.build());
+        blender.compile(filesBuilder.build(), outputFile, optionsBuilder.build());
         StyleSheet styleSheet = CSSFactory.parse(outputFile.getPath(), Charset.defaultCharset().name());
         DirectAnalyzer directAnalyzer = new DirectAnalyzer(styleSheet);
         assertElementBackgroundImageUrlEquals("/serve/assets/images/bad.jpg", "issue004-image-url-case-01", directAnalyzer);

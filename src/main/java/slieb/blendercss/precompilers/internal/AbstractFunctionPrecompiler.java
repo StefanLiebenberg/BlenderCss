@@ -1,7 +1,7 @@
 package slieb.blendercss.precompilers.internal;
 
 
-import slieb.blendercss.CompileOptions;
+import slieb.blendercss.BlendOptions;
 import slieb.blendercss.internal.FileGenerator;
 
 import javax.annotation.Nonnull;
@@ -55,7 +55,7 @@ public abstract class AbstractFunctionPrecompiler extends AbstractPrecompiler {
     }
 
     @Override
-    public void compile(File inputFile, File outputFile, CompileOptions options) throws IOException {
+    public void compile(File inputFile, File outputFile, BlendOptions options) throws IOException {
         try (FileReader fileReader = new FileReader(inputFile)) {
             BufferedReader reader = new BufferedReader(fileReader);
             outputFile.getParentFile().mkdirs();
@@ -81,7 +81,7 @@ public abstract class AbstractFunctionPrecompiler extends AbstractPrecompiler {
         return arguments;
     }
 
-    private String parseLine(String line, CompileOptions options) {
+    private String parseLine(String line, BlendOptions options) {
         final Matcher matcher = pattern.matcher(line);
         final StringBuffer sb = new StringBuffer();
         while (matcher.find()) {
@@ -91,5 +91,5 @@ public abstract class AbstractFunctionPrecompiler extends AbstractPrecompiler {
         return sb.toString();
     }
 
-    protected abstract String parseFunction(CompileOptions options, String... args);
+    protected abstract String parseFunction(BlendOptions options, String... args);
 }

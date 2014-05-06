@@ -1,7 +1,7 @@
 package slieb.blendercss.precompilers.internal;
 
 
-import slieb.blendercss.CompileOptions;
+import slieb.blendercss.BlendOptions;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,5 +19,5 @@ public interface CssPrecompiler {
      * @return The output file.
      * @throws IOException
      */
-    public File compile(File inputFile, CompileOptions options) throws IOException;
+    public File compile(File inputFile, BlendOptions options) throws IOException;
 }

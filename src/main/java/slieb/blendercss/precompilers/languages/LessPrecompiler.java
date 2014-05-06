@@ -4,7 +4,7 @@ import com.github.sommeri.less4j.Less4jException;
 import com.github.sommeri.less4j.LessCompiler;
 import com.google.common.io.Files;
 import com.google.inject.Inject;
-import slieb.blendercss.CompileOptions;
+import slieb.blendercss.BlendOptions;
 import slieb.blendercss.internal.FileGenerator;
 import slieb.blendercss.precompilers.internal.AbstractPrecompiler;
 
@@ -26,7 +26,7 @@ public class LessPrecompiler extends AbstractPrecompiler {
     }
 
     @Override
-    public void compile(File inputFile, File outputFile, CompileOptions options) throws IOException {
+    public void compile(File inputFile, File outputFile, BlendOptions options) throws IOException {
         try {
             LessCompiler.CompilationResult result = lessCompiler.compile(inputFile);
             String cssString = result.getCss();

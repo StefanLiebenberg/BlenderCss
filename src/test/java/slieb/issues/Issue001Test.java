@@ -4,7 +4,7 @@ package slieb.issues;
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
-import slieb.blendercss.CompileOptions;
+import slieb.blendercss.BlendOptions;
 import slieb.features.AbstractFeatureTest;
 
 import java.io.File;
@@ -29,11 +29,11 @@ public class Issue001Test extends AbstractFeatureTest {
     @Test
     public void testNoCache() throws Throwable {
         assertFalse(pwdCacheDirectory.exists());
-        compiler.compile(
+        blender.compile(
                 new ImmutableList.Builder<File>()
                 .add(getResourceFile("stylesheets/features/compass_compile/boxes.sass"))
                 .build(), outputFile,
-                new CompileOptions.Builder().build());
+                new BlendOptions.Builder().build());
         assertFalse(pwdCacheDirectory.exists());
     }
 }

@@ -4,7 +4,7 @@ package slieb.features;
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
-import slieb.blendercss.CompileOptions;
+import slieb.blendercss.BlendOptions;
 import slieb.blendercss.utilities.CssRenameMapParser;
 import slieb.blendercss.utilities.RenamingMap;
 
@@ -32,11 +32,11 @@ public class CssRenamingMapTest extends AbstractFeatureTest {
         File outputFile = getOutputFile("style.css");
         File renameMap = getOutputFile("rename.js");
 
-        CompileOptions options = new CompileOptions.Builder()
+        BlendOptions options = new BlendOptions.Builder()
                 .setOutputCssRenameMap(renameMap)
                 .build();
 
-        compiler.compile(inputFiles, outputFile, options);
+        blender.compile(inputFiles, outputFile, options);
 
         assertTrue(renameMap.exists());
         RenamingMap renamingMap = renameMapParser.parse(renameMap);
@@ -53,11 +53,11 @@ public class CssRenamingMapTest extends AbstractFeatureTest {
         File outputFile = getOutputFile("style.css");
         File renameMap = getOutputFile("rename.js");
 
-        CompileOptions options = new CompileOptions.Builder()
+        BlendOptions options = new BlendOptions.Builder()
                 .setOutputCssRenameMap(renameMap)
                 .build();
 
-        compiler.compile(inputFiles, outputFile, options);
+        blender.compile(inputFiles, outputFile, options);
 
         assertTrue(renameMap.exists());
         RenamingMap renamingMap = renameMapParser.parse(renameMap);

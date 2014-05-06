@@ -4,10 +4,9 @@ package slieb.features;
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
-import slieb.blendercss.CompileOptions;
+import slieb.blendercss.BlendOptions;
 
 import java.io.File;
-import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
@@ -24,12 +23,12 @@ public class CompassCompileTest extends AbstractFeatureTest {
 
     @Test
     public void testCompileCompassSCSSFile() throws Throwable {
-        compiler.compile(
+        blender.compile(
                 new ImmutableList.Builder<File>()
                         .add(getResourceFile("stylesheets/features/compass_compile/reset.scss"))
                         .build(),
                 outputFile,
-                new CompileOptions.Builder()
+                new BlendOptions.Builder()
                         .setOutputCssRenameMap(renameMap)
                         .build());
 
@@ -39,12 +38,12 @@ public class CompassCompileTest extends AbstractFeatureTest {
 
     @Test
     public void testCompileCompassSASSFile() throws Throwable {
-        compiler.compile(
+        blender.compile(
                 new ImmutableList.Builder<File>()
                         .add(getResourceFile("stylesheets/features/compass_compile/boxes.sass"))
                         .build(),
                 outputFile,
-                new CompileOptions.Builder()
+                new BlendOptions.Builder()
                         .setOutputCssRenameMap(renameMap)
                         .build());
 
@@ -54,12 +53,12 @@ public class CompassCompileTest extends AbstractFeatureTest {
 
     @Test
     public void testCompileCompassLESSFile() throws Throwable {
-        compiler.compile(
+        blender.compile(
                 new ImmutableList.Builder<File>()
                         .add(getResourceFile("stylesheets/features/compass_compile/simple.less"))
                         .build(),
                 outputFile,
-                new CompileOptions.Builder()
+                new BlendOptions.Builder()
                         .setOutputCssRenameMap(renameMap)
                         .build());
         assertTrue(outputFile.exists());

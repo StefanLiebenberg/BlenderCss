@@ -6,7 +6,7 @@ import com.google.common.css.JobDescription;
 import com.google.common.css.Vendor;
 import com.google.common.css.compiler.commandline.ClosureCommandLineCompiler;
 import com.google.inject.Singleton;
-import slieb.blendercss.CompileOptions;
+import slieb.blendercss.BlendOptions;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Singleton
 public class GssCompilerApi {
 
-    public String[] getArguments(List<File> inputFiles, File outputFile, CompileOptions options) throws IOException {
+    public String[] getArguments(List<File> inputFiles, File outputFile, BlendOptions options) throws IOException {
 
         final ImmutableList.Builder<String> arguments = new ImmutableList.Builder<>();
 
@@ -75,7 +75,7 @@ public class GssCompilerApi {
         return argumentsList.toArray(new String[argumentsList.size()]);
     }
 
-    public void compile(List<File> inputFiles, File outputFile, CompileOptions options) throws IOException {
+    public void compile(List<File> inputFiles, File outputFile, BlendOptions options) throws IOException {
         checkArgument(inputFiles != null && !inputFiles.isEmpty());
         checkArgument(outputFile != null);
         checkArgument(options != null);

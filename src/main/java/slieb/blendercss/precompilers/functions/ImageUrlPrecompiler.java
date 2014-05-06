@@ -1,7 +1,7 @@
 package slieb.blendercss.precompilers.functions;
 
 import com.google.inject.Inject;
-import slieb.blendercss.CompileOptions;
+import slieb.blendercss.BlendOptions;
 import slieb.blendercss.internal.FileGenerator;
 import slieb.blendercss.precompilers.internal.AbstractFunctionPrecompiler;
 
@@ -28,14 +28,14 @@ public class ImageUrlPrecompiler extends AbstractFunctionPrecompiler {
     }
 
     @Override
-    protected String parseFunction(CompileOptions options, String... args) {
+    protected String parseFunction(BlendOptions options, String... args) {
         checkArgument(args.length == 2);
         final String urlContent = args[1];
         final String path = urlContent.replaceAll("\"", "").replaceAll("'", "");
         return format(URL_FORMAT, resolvePath(path, options));
     }
 
-    protected String resolvePath(String path, CompileOptions options) {
+    protected String resolvePath(String path, BlendOptions options) {
         try {
             URI pathURI = new URI(path);
             if (!pathURI.isAbsolute()) {

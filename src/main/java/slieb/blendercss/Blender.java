@@ -11,19 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class Compiler {
+public class Blender {
 
     private final Set<CssPrecompiler> preCompilers;
 
     private final GssCompilerApi gssCompilerApi;
 
     @Inject
-    public Compiler(Set<CssPrecompiler> precompilers, GssCompilerApi gssCompilerApi) {
+    public Blender(Set<CssPrecompiler> precompilers, GssCompilerApi gssCompilerApi) {
         this.preCompilers = precompilers;
         this.gssCompilerApi = gssCompilerApi;
     }
 
-    private File precompileFilePass(File inputFile, CompileOptions options) throws IOException {
+    private File precompileFilePass(File inputFile, BlendOptions options) throws IOException {
         for (CssPrecompiler precompiler : preCompilers) {
             if (precompiler.canCompile(inputFile)) {
                 return precompiler.compile(inputFile, options);
@@ -32,7 +32,7 @@ public class Compiler {
         return null;
     }
 
-    private File precompileFile(File inputFile, CompileOptions options) throws IOException {
+    private File precompileFile(File inputFile, BlendOptions options) throws IOException {
         File outputFile = precompileFilePass(inputFile, options);
         if (outputFile != null) {
             return precompileFile(outputFile, options);
@@ -41,7 +41,7 @@ public class Compiler {
         }
     }
 
-    private List<File> precompile(List<File> inputFiles, CompileOptions options) throws IOException {
+    private List<File> precompile(List<File> inputFiles, BlendOptions options) throws IOException {
         List<File> result = new ArrayList<>();
         if (inputFiles != null && !inputFiles.isEmpty()) {
             for (File inputFile : inputFiles) {
@@ -52,7 +52,7 @@ public class Compiler {
     }
 
 
-    private void compileFiles(List<File> inputFiles, File outputFile, CompileOptions options) throws IOException {
+    private void compileFiles(List<File> inputFiles, File outputFile, BlendOptions options) throws IOException {
         for (File inputFile : inputFiles) {
             String name = inputFile.getName();
             if (!(name.endsWith(".css") || name.endsWith(".gss"))) {
@@ -62,7 +62,7 @@ public class Compiler {
         gssCompilerApi.compile(inputFiles, outputFile, options);
     }
 
-    public void compile(List<File> inputFiles, File outputFile, CompileOptions options) throws IOException {
+    public void compile(List<File> inputFiles, File outputFile, BlendOptions options) throws IOException {
         compileFiles(precompile(inputFiles, options), outputFile, options);
     }
 }

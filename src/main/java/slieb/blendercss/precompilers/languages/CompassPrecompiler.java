@@ -1,7 +1,7 @@
 package slieb.blendercss.precompilers.languages;
 
 import com.google.inject.Inject;
-import slieb.blendercss.CompileOptions;
+import slieb.blendercss.BlendOptions;
 import slieb.blendercss.internal.FileGenerator;
 import slieb.blendercss.api.CompassEngineApi;
 import slieb.blendercss.precompilers.internal.AbstractPrecompiler;
@@ -25,7 +25,7 @@ public class CompassPrecompiler extends AbstractPrecompiler {
 
 
     @Override
-    public void compile(File inputFile, File outputFile, CompileOptions options) throws IOException {
+    public void compile(File inputFile, File outputFile, BlendOptions options) throws IOException {
         compassApi.setImporter(inputFile.getParentFile());
         compassApi.setOption("filename", inputFile.getPath());
         String cssFilename = options.getOutputPath();

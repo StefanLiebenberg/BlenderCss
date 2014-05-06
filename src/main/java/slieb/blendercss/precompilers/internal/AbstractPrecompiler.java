@@ -1,6 +1,6 @@
 package slieb.blendercss.precompilers.internal;
 
-import slieb.blendercss.CompileOptions;
+import slieb.blendercss.BlendOptions;
 import slieb.blendercss.internal.FileGenerator;
 
 import javax.annotation.Nonnull;
@@ -46,7 +46,7 @@ public abstract class AbstractPrecompiler implements CssPrecompiler {
     }
 
     @Override
-    public File compile(File inputFile, CompileOptions options) throws IOException {
+    public File compile(File inputFile, BlendOptions options) throws IOException {
         final File outputFile = fileGenerator.getOutputFileFor(inputFile, outputExtension);
         outputFile.getParentFile().mkdirs();
         compile(inputFile, outputFile, options);
@@ -54,5 +54,5 @@ public abstract class AbstractPrecompiler implements CssPrecompiler {
         return outputFile;
     }
 
-    public abstract void compile(File inputFile, File outputFile, CompileOptions options) throws IOException;
+    public abstract void compile(File inputFile, File outputFile, BlendOptions options) throws IOException;
 }

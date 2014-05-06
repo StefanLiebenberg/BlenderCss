@@ -10,7 +10,7 @@ import javax.annotation.concurrent.Immutable;
 import java.io.File;
 
 @Immutable
-public class CompileOptions {
+public class BlendOptions {
 
     private final Boolean shouldCompile, shouldDebug;
     private final String imagesPath, outputPath;
@@ -18,13 +18,13 @@ public class CompileOptions {
     private final JobDescription.InputOrientation orientation;
     private final Vendor vendor;
 
-    public CompileOptions(@Nonnull Boolean shouldCompile,
-                          @Nonnull Boolean shouldDebug,
-                          @Nullable String imagesPath,
-                          @Nullable String outputPath,
-                          @Nullable File outputCssRenameMap,
-                          @Nullable JobDescription.InputOrientation orientation,
-                          @Nullable Vendor vendor) {
+    public BlendOptions(@Nonnull Boolean shouldCompile,
+                        @Nonnull Boolean shouldDebug,
+                        @Nullable String imagesPath,
+                        @Nullable String outputPath,
+                        @Nullable File outputCssRenameMap,
+                        @Nullable JobDescription.InputOrientation orientation,
+                        @Nullable Vendor vendor) {
         this.shouldCompile = shouldCompile;
         this.shouldDebug = shouldDebug;
         this.imagesPath = imagesPath;
@@ -110,8 +110,8 @@ public class CompileOptions {
         }
 
         @Nonnull
-        public CompileOptions build() {
-            return new CompileOptions(shouldCompile, shouldDebug, imagesPath, outputPath, outputCssRenameMap, orientation, vendor);
+        public BlendOptions build() {
+            return new BlendOptions(shouldCompile, shouldDebug, imagesPath, outputPath, outputCssRenameMap, orientation, vendor);
         }
     }
 

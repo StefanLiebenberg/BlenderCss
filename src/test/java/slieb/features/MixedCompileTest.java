@@ -4,7 +4,7 @@ package slieb.features;
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
-import slieb.blendercss.CompileOptions;
+import slieb.blendercss.BlendOptions;
 
 import java.io.File;
 import java.util.List;
@@ -28,10 +28,10 @@ public class MixedCompileTest extends AbstractFeatureTest {
                 .add(getResourceFile("stylesheets/features/compass_compile/simple.less"))
                 .build();
 
-        CompileOptions options = new CompileOptions.Builder()
+        BlendOptions options = new BlendOptions.Builder()
                 .setOutputCssRenameMap(renameMap)
                 .build();
 
-        compiler.compile(inputFiles, outputFile, options);
+        blender.compile(inputFiles, outputFile, options);
     }
 }

@@ -6,6 +6,7 @@ import com.google.inject.Injector;
 import org.apache.tools.ant.util.FileUtils;
 import org.junit.After;
 import org.junit.Before;
+import slieb.blendercss.Blender;
 import slieb.blendercss.Loader;
 
 import java.io.File;
@@ -45,13 +46,13 @@ public abstract class AbstractFeatureTest {
 
     protected Injector injector;
 
-    protected slieb.blendercss.Compiler compiler;
+    protected Blender blender;
 
     @Before
     public void setup() {
         workingDirectory = getOutputDirectory();
         injector = Loader.getInjector(workingDirectory);
-        compiler = injector.getInstance(slieb.blendercss.Compiler.class);
+        blender = injector.getInstance(Blender.class);
     }
 
     @After
