@@ -1,6 +1,5 @@
 package slieb.blendercss.internal;
 
-
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -29,16 +28,20 @@ public class FileGenerator {
         }
     }
 
-    public File getTempDirectory() {
-        return new File(workingDirectory, "precompiledFiles");
+    public File getOutputDirectory(String dirName) {
+        return new File(workingDirectory, dirName);
+    }
+
+    private File getTempDirectory() {
+        return getOutputDirectory("preprocessed");
     }
 
     public File getCacheDirectory() {
-        return new File(workingDirectory, "cache");
+        return getOutputDirectory("cache");
     }
 
     private String getMD5(String message) throws IOException {
-        String digest = null;
+        String digest;
         try {
             byte[] hash = md.digest(message.getBytes("UTF-8"));
             StringBuilder sb = new StringBuilder(2 * hash.length);
@@ -52,9 +55,9 @@ public class FileGenerator {
         return digest;
     }
 
-    public File getOutputFileFor(File inputFile, String outputExt) throws IOException {
-        String md5String = getMD5(inputFile.getAbsolutePath());
-        String extension = outputExt != null ? outputExt : getExtension(inputFile.getName());
+    public File getOutputFileFor(GssResource input, String outputExt) throws IOException {
+        String md5String = getMD5(input.getFileName());
+        String extension = outputExt != null ? outputExt : getExtension(input.getFileName());
         String name = format("%s.%s", md5String, extension);
         return new File(getTempDirectory(), name);
     }

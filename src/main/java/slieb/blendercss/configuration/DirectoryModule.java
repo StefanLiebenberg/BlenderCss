@@ -5,7 +5,6 @@ import com.google.inject.name.Names;
 
 import java.io.File;
 
-
 public class DirectoryModule extends AbstractModule {
 
     private final String name;

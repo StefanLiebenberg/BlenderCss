@@ -1,6 +1,5 @@
 package slieb.blendercss;
 
-
 import com.google.common.css.JobDescription;
 import com.google.common.css.Vendor;
 
@@ -13,9 +12,13 @@ import java.io.File;
 public class BlendOptions {
 
     private final Boolean shouldCompile, shouldDebug;
+
     private final String imagesPath, outputPath;
+
     private final File outputCssRenameMap;
+
     private final JobDescription.InputOrientation orientation;
+
     private final Vendor vendor;
 
     public BlendOptions(@Nonnull Boolean shouldCompile,
@@ -70,10 +73,15 @@ public class BlendOptions {
     }
 
     public static class Builder {
+
         private Boolean shouldCompile = false, shouldDebug = false;
+
         private String imagesPath, outputPath;
+
         private File outputCssRenameMap;
+
         private JobDescription.InputOrientation orientation;
+
         private Vendor vendor;
 
         public Builder setShouldCompile(@Nonnull Boolean shouldCompile) {
@@ -114,5 +122,4 @@ public class BlendOptions {
             return new BlendOptions(shouldCompile, shouldDebug, imagesPath, outputPath, outputCssRenameMap, orientation, vendor);
         }
     }
-
 }

@@ -1,69 +1,71 @@
 package slieb.blendercss;
 
-
+import com.google.common.css.SourceCode;
+import com.google.common.css.compiler.ast.GssParserException;
 import com.google.inject.Inject;
 import slieb.blendercss.api.GssCompilerApi;
-import slieb.blendercss.precompilers.internal.CssPrecompiler;
+import slieb.blendercss.exceptions.BlenderException;
+import slieb.blendercss.internal.GssResource;
+import slieb.blendercss.precompilers.internal.CssProcessor;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static java.util.stream.Collectors.toList;
+
 public class Blender {
 
-    private final Set<CssPrecompiler> preCompilers;
+    private final Set<CssProcessor> preCompilers;
 
     private final GssCompilerApi gssCompilerApi;
 
     @Inject
-    public Blender(Set<CssPrecompiler> precompilers, GssCompilerApi gssCompilerApi) {
-        this.preCompilers = precompilers;
+    public Blender(final Set<CssProcessor> processors, final GssCompilerApi gssCompilerApi) {
+        this.preCompilers = processors;
         this.gssCompilerApi = gssCompilerApi;
     }
 
-    private File precompileFilePass(File inputFile, BlendOptions options) throws IOException {
-        for (CssPrecompiler precompiler : preCompilers) {
-            if (precompiler.canCompile(inputFile)) {
-                return precompiler.compile(inputFile, options);
+    public void compile(final List<GssResource> resources, final File outputFile, final BlendOptions options) {
+        try {
+            doCompile(preProcessResources(resources, options), outputFile, options);
+        } catch (BlenderException blenderException) {
+            throw blenderException;
+        } catch (Throwable throwable) {
+            throw new BlenderException("There was some error when trying to do blender compile", throwable);
+        }
+    }
+
+    private List<GssResource> preProcessResources(List<GssResource> resources, final BlendOptions options) {
+        for (CssProcessor.Phase phase : CssProcessor.PRIORITISED) {
+            resources = preProcessResourcesForPhase(resources, options, phase);
+        }
+        return resources;
+    }
+
+    private List<GssResource> preProcessResourcesForPhase(final List<GssResource> resources, final BlendOptions options,
+                                                          final CssProcessor.Phase phase) {
+        return resources.stream()
+                        .map(input -> preProcessResource(phase, input, options))
+                        .collect(toList());
+    }
+
+    private GssResource preProcessResource(final CssProcessor.Phase phase, final GssResource resource, final BlendOptions options) {
+        for (CssProcessor processors : preCompilers) {
+            if (processors.canProcess(phase, resource)) {
+                return preProcessResource(phase, processors.process(resource, options), options);
             }
         }
-        return null;
+        return resource;
     }
 
-    private File precompileFile(File inputFile, BlendOptions options) throws IOException {
-        File outputFile = precompileFilePass(inputFile, options);
-        if (outputFile != null) {
-            return precompileFile(outputFile, options);
-        } else {
-            return inputFile;
-        }
+    private void doCompile(final List<GssResource> resources, final File outputFile, final BlendOptions options) throws IOException, GssParserException {
+        gssCompilerApi.compile(toSourceCode(resources), outputFile, options);
     }
 
-    private List<File> precompile(List<File> inputFiles, BlendOptions options) throws IOException {
-        List<File> result = new ArrayList<>();
-        if (inputFiles != null && !inputFiles.isEmpty()) {
-            for (File inputFile : inputFiles) {
-                result.add(precompileFile(inputFile, options));
-            }
-        }
-        return result;
-    }
-
-
-    private void compileFiles(List<File> inputFiles, File outputFile, BlendOptions options) throws IOException {
-        for (File inputFile : inputFiles) {
-            String name = inputFile.getName();
-            if (!(name.endsWith(".css") || name.endsWith(".gss"))) {
-                System.err.println(String.format("Warning: File '%s' does not have css or gss extension, assuming the file compatible with gss compiler.", inputFile.getPath()));
-            }
-        }
-        gssCompilerApi.compile(inputFiles, outputFile, options);
-    }
-
-    public void compile(List<File> inputFiles, File outputFile, BlendOptions options) throws IOException {
-        compileFiles(precompile(inputFiles, options), outputFile, options);
+    private List<SourceCode> toSourceCode(final List<GssResource> resources) {
+        return resources.stream().map(GssResource::asSourceCode).collect(toList());
     }
 }
 

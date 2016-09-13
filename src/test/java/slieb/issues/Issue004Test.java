@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import slieb.blendercss.BlendOptions;
+import slieb.blendercss.internal.GssResource;
 import slieb.features.AbstractFeatureTest;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -22,7 +23,7 @@ public class Issue004Test extends AbstractFeatureTest {
 
     private BlendOptions.Builder optionsBuilder;
 
-    private ImmutableList.Builder<File> filesBuilder;
+    private ImmutableList.Builder<GssResource> filesBuilder;
 
     private File outputFile;
 
@@ -47,6 +48,7 @@ public class Issue004Test extends AbstractFeatureTest {
         optionsBuilder.setOutputPath("/server/css/style.css");
 
         blender.compile(filesBuilder.build(), outputFile, optionsBuilder.build());
+
         StyleSheet styleSheet = CSSFactory.parse(outputFile.getPath(), Charset.defaultCharset().name());
         DirectAnalyzer directAnalyzer = new DirectAnalyzer(styleSheet);
         assertElementBackgroundImageUrlEquals("/serve/assets/images/bad.jpg", "issue004-image-url-case-01", directAnalyzer);

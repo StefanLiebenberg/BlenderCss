@@ -1,10 +1,10 @@
 package slieb.features;
 
-
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import slieb.blendercss.BlendOptions;
+import slieb.blendercss.internal.GssResource;
 import slieb.blendercss.utilities.CssRenameMapParser;
 import slieb.blendercss.utilities.RenamingMap;
 
@@ -24,8 +24,8 @@ public class CssRenamingMapTest extends AbstractFeatureTest {
 
     @Test
     public void testRenamingMapForBasicCss() throws Exception {
-
-        List<File> inputFiles = new ImmutableList.Builder<File>()
+        
+        List<GssResource> inputFiles = new ImmutableList.Builder<GssResource>()
                 .add(getResourceFile("stylesheets/features/css_renaming_map/basic.css"))
                 .build();
 
@@ -46,7 +46,7 @@ public class CssRenamingMapTest extends AbstractFeatureTest {
     @Test
     public void testRenamingMapForSassFiles() throws Exception {
 
-        List<File> inputFiles = new ImmutableList.Builder<File>()
+        List<GssResource> inputFiles = new ImmutableList.Builder<GssResource>()
                 .add(getResourceFile("stylesheets/features/css_renaming_map/basic.sass"))
                 .build();
 

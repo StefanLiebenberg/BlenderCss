@@ -1,10 +1,10 @@
 package slieb.issues;
 
-
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import slieb.blendercss.BlendOptions;
+import slieb.blendercss.internal.GssResource;
 import slieb.features.AbstractFeatureTest;
 
 import java.io.File;
@@ -30,9 +30,9 @@ public class Issue001Test extends AbstractFeatureTest {
     public void testNoCache() throws Throwable {
         assertFalse(pwdCacheDirectory.exists());
         blender.compile(
-                new ImmutableList.Builder<File>()
-                .add(getResourceFile("stylesheets/features/compass_compile/boxes.sass"))
-                .build(), outputFile,
+                new ImmutableList.Builder<GssResource>()
+                        .add(getResourceFile("stylesheets/features/compass_compile/boxes.sass"))
+                        .build(), outputFile,
                 new BlendOptions.Builder().build());
         assertFalse(pwdCacheDirectory.exists());
     }

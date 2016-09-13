@@ -33,7 +33,7 @@ class SassCompilerApi
   end
 
   def compile(inputFile, additionalOptions = {})
-    opts = @options.merge(additionalOptions);
+    opts = @options.merge(additionalOptions)
     Sass::Engine.for_file(inputFile, opts).render
   end
 

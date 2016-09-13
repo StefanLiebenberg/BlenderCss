@@ -1,10 +1,10 @@
 package slieb.features;
 
-
 import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import slieb.blendercss.BlendOptions;
+import slieb.blendercss.internal.GssResource;
 
 import java.io.File;
 import java.util.List;
@@ -22,7 +22,7 @@ public class MixedCompileTest extends AbstractFeatureTest {
     @Test
     public void testMixedCompile() throws Throwable {
 
-        List<File> inputFiles = new ImmutableList.Builder<File>()
+        List<GssResource> inputFiles = new ImmutableList.Builder<GssResource>()
                 .add(getResourceFile("stylesheets/features/compass_compile/reset.scss"))
                 .add(getResourceFile("stylesheets/features/compass_compile/boxes.sass"))
                 .add(getResourceFile("stylesheets/features/compass_compile/simple.less"))

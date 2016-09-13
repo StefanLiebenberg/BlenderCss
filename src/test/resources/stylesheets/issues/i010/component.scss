@@ -1,0 +1,7 @@
+@import 'general';
+
+.my-component {
+  color: red;
+  background: blue;
+  background-image: image-url('bad.jpg');
+}

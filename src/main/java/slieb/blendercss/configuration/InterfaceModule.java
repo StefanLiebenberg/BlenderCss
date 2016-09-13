@@ -1,6 +1,5 @@
 package slieb.blendercss.configuration;
 
-
 import com.google.inject.AbstractModule;
 
 public class InterfaceModule<A> extends AbstractModule {

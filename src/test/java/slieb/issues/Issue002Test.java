@@ -1,11 +1,11 @@
 package slieb.issues;
 
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.Files;
 import org.junit.Before;
 import org.junit.Test;
 import slieb.blendercss.BlendOptions;
+import slieb.blendercss.internal.GssResource;
 import slieb.features.AbstractFeatureTest;
 
 import java.io.File;
@@ -25,7 +25,7 @@ public class Issue002Test extends AbstractFeatureTest {
 
     private void compileOptions(Boolean shouldCompile, Boolean shouldDebug) throws Throwable {
         blender.compile(
-                new ImmutableList.Builder<File>()
+                new ImmutableList.Builder<GssResource>()
                         .add(getResourceFile("stylesheets/issues/i002/user.less"))
                         .build(),
                 outputFile,

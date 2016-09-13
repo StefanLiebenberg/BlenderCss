@@ -1,6 +1,5 @@
 package slieb.blendercss.utilities;
 
-
 import com.google.common.io.Files;
 import com.google.inject.Inject;
 import org.codehaus.jackson.map.ObjectMapper;
