@@ -59,7 +59,7 @@ public class Issue004Test extends AbstractFeatureTest {
     public void assertElementBackgroundImageUrlEquals(String expected, String cssClass, DirectAnalyzer analyzer) throws Throwable {
         Element case1Element = document.createElement("div");
         case1Element.setAttribute("class", cssClass);
-        NodeData data = analyzer.getElementStyle(case1Element, null, null);
+        NodeData data = analyzer.getElementStyle(case1Element, null, "all");
         CSSProperty.BackgroundImage backgroundImage = data.getProperty("background-image");
         Term<String> object = data.getValue(TermURIImpl.class, "background-image");
         assertEquals(expected, object.getValue());

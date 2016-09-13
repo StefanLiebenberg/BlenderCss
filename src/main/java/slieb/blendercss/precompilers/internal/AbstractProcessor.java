@@ -18,7 +18,7 @@ public abstract class AbstractProcessor implements CssProcessor {
 
     /**
      * @param fileGenerator   utility class
-     * @param phase
+     * @param phase           The phase this processor should be active in.
      * @param inputExtensions IF null, then all inputs are allowed. ( important
      *                        to use other checks then to ensure that no
      *                        circular compiling happens )

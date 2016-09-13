@@ -8,22 +8,22 @@ import java.io.IOException;
 public interface CssProcessor {
 
     enum Phase {
-        BEFORE,
         FUNCTIONS,
-        LANGUAGES,
-        AFTER
+        LANGUAGES
     }
 
-    Phase[] PRIORITISED = new Phase[]{Phase.BEFORE, Phase.FUNCTIONS, Phase.LANGUAGES, Phase.AFTER};
+    Phase[] PRIORITISED = new Phase[]{Phase.FUNCTIONS, Phase.LANGUAGES};
 
     /**
+     * @param phase The phase in which this processor is active.
      * @param input The input source code resource
      * @return A boolean to determine whether or not this resource can be processed.
      */
     Boolean canProcess(Phase phase, GssResource input);
 
     /**
-     * @param input The input source code resource
+     * @param input   The input source code resource
+     * @param options The blender options.
      * @return The output source code resource.
      */
     default GssResource process(GssResource input, BlendOptions options) {

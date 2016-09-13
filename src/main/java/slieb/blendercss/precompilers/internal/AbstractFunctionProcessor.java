@@ -19,8 +19,9 @@ public abstract class AbstractFunctionProcessor extends AbstractProcessor {
     private final Pattern pattern;
 
     /**
-     * @param pattern
-     * @param fileGenerator
+     * @param pattern         A pattern to match against the file contents.
+     * @param fileGenerator   A instance of the file generator helper class.
+     * @param phase           The phase in which this processor is active.
      * @param inputExtensions IF null, then all inputs are allowed. ( important
      *                        to use other checks then to ensure that no
      *                        circular compiling happens )
